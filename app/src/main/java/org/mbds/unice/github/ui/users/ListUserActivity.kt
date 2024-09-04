@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.mbds.unice.github.R
 import org.mbds.unice.github.data.model.User
+import org.mbds.unice.github.databinding.ActivityListUserBinding
 
 class ListUserActivity : AppCompatActivity(), UserListAdapter.Listener {
     // TODO : Utiliser viewBinding
@@ -25,7 +26,10 @@ class ListUserActivity : AppCompatActivity(), UserListAdapter.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_user)
+       //  Permet de lier automatiquement les vues entre le XML et la vue
+        val binding : ActivityListUserBinding = ActivityListUserBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         configureFab()
         configureRecyclerView()
     }
@@ -45,7 +49,8 @@ class ListUserActivity : AppCompatActivity(), UserListAdapter.Listener {
     private fun configureFab() {
         fab = findViewById(R.id.activity_list_user_fab)
         fab.setOnClickListener {
-            TODO("Ajouter un utilisateur aléatoire")
+            //TODO("Ajouter un utilisateur aléatoire")
+
         }
     }
 
