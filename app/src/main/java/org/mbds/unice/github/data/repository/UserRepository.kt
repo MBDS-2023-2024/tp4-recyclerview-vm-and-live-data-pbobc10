@@ -15,13 +15,15 @@ class UserRepository(
     }
 
     fun addRandomUser() {
-        //TODO("Should add a random user")
+        //Should add a random user
         val fakeUser = FAKE_USERS_RANDOM.random()
         FAKE_USERS.add(fakeUser)
         println("test "+ fakeUser)
     }
 
     fun deleteUser(user: User) {
-        TODO("Should remove the user")
+       // Should remove the user
+        FAKE_USERS.remove(user)
+
     }
 }
