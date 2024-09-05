@@ -11,19 +11,17 @@ class UserRepository(
 ) {
     fun getUsers(): List<User> {
         // Should return the list of users retrieved from the api service
-        return FAKE_USERS
+        return apiService.getUsers()
     }
 
     fun addRandomUser() {
         //Should add a random user
-        val fakeUser = FAKE_USERS_RANDOM.random()
-        FAKE_USERS.add(fakeUser)
-        println("test "+ fakeUser)
+        apiService.addRandomUser()
     }
 
     fun deleteUser(user: User) {
        // Should remove the user
-        FAKE_USERS.remove(user)
+        apiService.deleteUser(user)
 
     }
 }

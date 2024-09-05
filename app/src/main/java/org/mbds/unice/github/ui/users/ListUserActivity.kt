@@ -1,6 +1,9 @@
 package org.mbds.unice.github.ui.users
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +17,7 @@ class ListUserActivity : AppCompatActivity(), UserListAdapter.Listener {
     lateinit var recyclerView: RecyclerView
     lateinit var fab: FloatingActionButton
 
+
     // By lazy permet de faire du chargement parresseux,
     // L'adapteur sera crée au premier appel
     private val adapter: UserListAdapter by lazy {
@@ -26,8 +30,8 @@ class ListUserActivity : AppCompatActivity(), UserListAdapter.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       //  Permet de lier automatiquement les vues entre le XML et la vue
-        val binding : ActivityListUserBinding = ActivityListUserBinding.inflate(layoutInflater)
+        //  Permet de lier automatiquement les vues entre le XML et la vue
+        val binding: ActivityListUserBinding = ActivityListUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         configureFab()
@@ -49,13 +53,38 @@ class ListUserActivity : AppCompatActivity(), UserListAdapter.Listener {
     private fun configureFab() {
         fab = findViewById(R.id.activity_list_user_fab)
         fab.setOnClickListener {
-            //TODO("Ajouter un utilisateur aléatoire")
-
+            viewModel.generateRandomUser()
+            Toast.makeText(this, "adding user", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onClickDelete(user: User) {
-        TODO("Ajouter des logs pour tracer les actions de l'utilisateur")
-        TODO("Ajouter une boite de dialogue pour confirmer la suppression et supprimer l'utilisateur si l'utilisateur confirme")
+        //Ajouter des logs pour tracer les actions de l'utilisateur
+        Log.d("UserAction", "Delete requested for user: $user")
+
+        //Ajouter une boite de dialogue pour confirmer la suppression " +
+        //"et supprimer l'utilisateur si l'utilisateur confirme"
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Confirm delete")
+        builder.setMessage("Are you sure you want to delete $user?")
+
+        // If the user confirms deletion
+        builder.setPositiveButton("yes") { dialog, _ ->
+            // Perform the deletion here
+            viewModel.deleteUser(user)
+            Log.d("UserAction", "User $user deleted")
+            dialog.dismiss() // Close the dialog
+
+            // If the user cancels deletion
+            builder.setNegativeButton("NO") { dialog, _ ->
+                Log.d("UserAction", "Deletion canceled for user: ${user}")
+                dialog.dismiss() // Close the dialog
+            }
+
+            // show the dialog
+            val dialog = builder.create()
+            dialog.show()
+
+        }
     }
 }
