@@ -49,23 +49,27 @@ class ListUserActivity : AppCompatActivity(), UserListAdapter.Listener {
 
     override fun onClickDelete(user: User) {
         //Ajouter des logs pour tracer les actions de l'utilisateur
-        Log.d("UserAction", "Delete requested for user: $user")
-        //Ajouter une boite de dialogue pour confirmer la suppression et supprimer l'utilisateur si l'utilisateur confirme"
-        var builder = AlertDialog.Builder(this)
-        builder.setTitle("Confirm delete")
-        builder.setMessage("Are you sure you want to delete $user?")
+        Log.d("UserAction", "Toggle status requested for user: $user")
 
-        // If the user confirms deletion
+        val newStatus = !user.isActive
+        val action = if (newStatus) "activate" else "deactivate"
+
+        //Ajouter une boite de dialogue pour confirmer l'action de l'utilisateur"
+        var builder = AlertDialog.Builder(this)
+        builder.setTitle("Confirm status change")
+        builder.setMessage("Are you sure you want to $action ${user.login}?")
+
+        // If the user confirms action
         builder.setPositiveButton("yes") { dialog, _ ->
-            // Perform the deletion here
-            viewModel.deleteUser(user)
-            Log.d("UserAction", "User $user deleted")
+            // Perform the action here
+            viewModel.toggleUserStatus(user)
+            Log.d("UserAction", "User ${user.login} status changed to $newStatus")
             dialog.dismiss() // Close the dialog
             }
 
-        // If the user cancels deletion
+        // If the user cancels action
         builder.setNegativeButton("NO") { dialog, _ ->
-            Log.d("UserAction", "Deletion canceled for user: ${user}")
+            Log.d("UserAction", "Status change canceled for user: ${user.login}")
             dialog.dismiss() // Close the dialog
         }
             // show the dialog

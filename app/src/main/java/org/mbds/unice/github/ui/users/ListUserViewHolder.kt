@@ -4,6 +4,7 @@ import android.util.Log
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import org.mbds.unice.github.R
 import org.mbds.unice.github.data.model.User
 import org.mbds.unice.github.databinding.ItemListUserBinding
 
@@ -14,9 +15,20 @@ class ListUserViewHolder(private val binding: ItemListUserBinding) : RecyclerVie
         Glide.with(itemView.context)
             .load(user.avatarUrl)
             .into(binding.itemListUserAvatar)
-        //Log.d("ImageLoading", "Loading image from URL: ${user.avatarUrl}")
+
         binding.itemListUserUsername.text = user.login
 
+        // Changer le background en fonction du statut de l'utilisateur
+        itemView.setBackgroundColor(
+            if (user.isActive) android.graphics.Color.WHITE
+            else android.graphics.Color.RED
+        )
+
+        // Changer l'icône du bouton en fonction du statut de l'utilisateur
+        binding.itemListUserDeleteButton.setImageResource(
+            if (user.isActive) R.drawable.ic_delete_black_24dp
+            else R.drawable.ic_restore_black_24dp
+        )
         binding.itemListUserDeleteButton.setOnClickListener {
             callback.onClickDelete(user)
             Log.d("test", "delete user")

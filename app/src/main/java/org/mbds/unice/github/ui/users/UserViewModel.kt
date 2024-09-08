@@ -36,4 +36,14 @@ class UserViewModel : ViewModel() {
         userRepository.deleteUser(user)
         refresh()
     }
+
+    fun toggleUserStatus(user: User) {
+        val currentList = _users.value?.toMutableList() ?: mutableListOf()
+        val index = currentList.indexOfFirst { it.id == user.id }
+        if (index != -1) {
+            val updatedUser = currentList[index].copy(isActive = !currentList[index].isActive)
+            currentList[index] = updatedUser
+            _users.value = currentList  // Ceci déclenchera une mise à jour
+        }
+    }
 }
