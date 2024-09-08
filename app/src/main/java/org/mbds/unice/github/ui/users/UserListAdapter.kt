@@ -23,12 +23,8 @@ class UserListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListUserViewHolder {
-        val context = parent.context
-        // Use ViewBinding to inflate the view
         val binding = ItemListUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.item_list_user, parent, false)
-        return ListUserViewHolder(view)
+        return ListUserViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ListUserViewHolder, position: Int) {
@@ -42,6 +38,6 @@ class UserListAdapter(
     // PUBLIC API ---
     fun updateList(newList: List<User>) {
         mDiffer.submitList(ArrayList(newList))
-        Log.d("test","new list size"+newList.size)
+        Log.d("test", "new list size" + newList.size)
     }
 }

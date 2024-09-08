@@ -1,36 +1,25 @@
 package org.mbds.unice.github.ui.users
 
 import android.util.Log
-import android.view.View
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.mbds.unice.github.R
 import org.mbds.unice.github.data.model.User
+import org.mbds.unice.github.databinding.ItemListUserBinding
 
-//TODO : Use viewBinding instead of findviewbyid
-class ListUserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private var avatar: ImageView = itemView.findViewById(R.id.item_list_user_avatar)
-    private val username: TextView = itemView.findViewById(R.id.item_list_user_username)
-    private val deleteButton: ImageButton = itemView.findViewById(R.id.item_list_user_delete_button)
+class ListUserViewHolder(private val binding: ItemListUserBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(user: User, callback: UserListAdapter.Listener) {
-        // TODO : Utiliser une librairie pour charger l'image (glide, coil, )
         // Load image using Glide
         Glide.with(itemView.context)
-            .load(user.avatarUrl)  // URL or URI of the image
-//            .placeholder(R.drawable.placeholder_image) // Placeholder while loading
-//            .error(R.drawable.error_image)  // Error image if load fails
-            .into(avatar)  // The ImageView where the image will be displayed
-        username.text = user.login
-        deleteButton.setOnClickListener {
+            .load(user.avatarUrl)
+            .into(binding.itemListUserAvatar)
+        //Log.d("ImageLoading", "Loading image from URL: ${user.avatarUrl}")
+        binding.itemListUserUsername.text = user.login
+
+        binding.itemListUserDeleteButton.setOnClickListener {
             callback.onClickDelete(user)
             Log.d("test", "delete user")
         }
-
     }
-
 }

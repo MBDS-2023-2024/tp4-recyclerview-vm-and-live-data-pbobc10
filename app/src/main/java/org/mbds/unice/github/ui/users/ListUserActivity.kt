@@ -6,21 +6,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.mbds.unice.github.R
 import org.mbds.unice.github.data.model.User
 import org.mbds.unice.github.databinding.ActivityListUserBinding
 
 class ListUserActivity : AppCompatActivity(), UserListAdapter.Listener {
-    // TODO : Utiliser viewBinding
-    lateinit var recyclerView: RecyclerView
-    lateinit var fab: FloatingActionButton
     lateinit var binding: ActivityListUserBinding
-
-
-    // By lazy permet de faire du chargement parresseux,
-    // L'adapteur sera crée au premier appel
+    // By lazy permet de faire du chargement parresseux, L'adapteur sera crée au premier appel
     private val adapter: UserListAdapter by lazy {
         UserListAdapter(this)
     }
@@ -34,7 +25,6 @@ class ListUserActivity : AppCompatActivity(), UserListAdapter.Listener {
         //  Permet de lier automatiquement les vues entre le XML et la vue
         binding = ActivityListUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         configureFab()
         configureRecyclerView()
     }
@@ -47,13 +37,10 @@ class ListUserActivity : AppCompatActivity(), UserListAdapter.Listener {
     }
 
     private fun configureRecyclerView() {
-       // recyclerView = findViewById(R.id.activity_list_user_rv)
         binding.activityListUserRv.adapter = adapter
-        //recyclerView.adapter = adapter
     }
 
     private fun configureFab() {
-        //fab = findViewById(R.id.activity_list_user_fab)
         binding.activityListUserFab.setOnClickListener {
             viewModel.generateRandomUser()
             Toast.makeText(this, "adding user", Toast.LENGTH_SHORT).show()
