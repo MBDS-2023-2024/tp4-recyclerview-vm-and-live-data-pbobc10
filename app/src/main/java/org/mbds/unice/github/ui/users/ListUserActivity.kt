@@ -2,10 +2,14 @@ package org.mbds.unice.github.ui.users
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import org.mbds.unice.github.R
+import org.mbds.unice.github.data.model.SortOption
 import org.mbds.unice.github.data.model.User
 import org.mbds.unice.github.databinding.ActivityListUserBinding
 
@@ -75,9 +79,41 @@ class ListUserActivity : AppCompatActivity(), UserListAdapter.Listener {
             // show the dialog
             val dialog = builder.create()
             dialog.show()
-
-
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_list_user,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.sort_name_asc -> {
+                viewModel.sortUsers(SortOption.NAME_ASC)
+                true
+            }
+            R.id.sort_name_desc -> {
+                viewModel.sortUsers(SortOption.NAME_DESC)
+                true
+            }
+            R.id.sort_date_asc -> {
+                viewModel.sortUsers(SortOption.DATE_ASC)
+                true
+            }
+            R.id.sort_date_desc -> {
+                viewModel.sortUsers(SortOption.DATE_DESC)
+                true
+            }
+            R.id.sort_status_active -> {
+                viewModel.sortUsers(SortOption.STATUS_ACTIVE)
+                true
+            }
+            R.id.sort_status_inactive -> {
+                viewModel.sortUsers(SortOption.STATUS_INACTIVE)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
 }

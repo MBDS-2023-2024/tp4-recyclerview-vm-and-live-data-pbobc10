@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_sort"
+        android:title="Sort"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/sort_name_asc"
+                android:title="Name (A-Z)" />
+            <item
+                android:id="@+id/sort_name_desc"
+                android:title="Name (Z-A)" />
+            <item
+                android:id="@+id/sort_date_asc"
+                android:title="Date (Oldest first)" />
+            <item
+                android:id="@+id/sort_date_desc"
+                android:title="Date (Newest first)" />
+            <item
+                android:id="@+id/sort_status_active"
+                android:title="Status (Active first)" />
+            <item
+                android:id="@+id/sort_status_inactive"
+                android:title="Status (Inactive first)" />
+        </menu>
+    </item>
+</menu>
